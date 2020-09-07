@@ -332,10 +332,29 @@ class PdfViewerComponent {
      * @return {?}
      */
     ngOnDestroy() {
-        if (this._pdf) {
-            this._pdf.destroy();
-        }
+        this.clear();
     }
+
+    //added this function
+    clear() {
+        if (this.loadingTask && !this.loadingTask.destroyed) {
+          this.loadingTask.destroy();
+        }
+    
+        if (this._pdf) {
+          this._pdf.destroy();
+          this._pdf = null;
+          this.pdfMultiPageViewer.setDocument(null);
+          this.pdfSinglePageViewer.setDocument(null);
+    
+          this.pdfMultiPageLinkService.setDocument(null, null);
+          this.pdfSinglePageLinkService.setDocument(null, null);
+    
+          this.pdfMultiPageFindController.setDocument(null);
+          this.pdfSinglePageFindController.setDocument(null);
+        }
+      }
+
     /**
      * @return {?}
      */

@@ -383,9 +383,11 @@ var PdfViewerComponent = /** @class */ (function () {
      * @return {?}
      */
     PdfViewerComponent.prototype.ngOnDestroy = function () {
+        console.log('clear memory check11....!!');
         if (this._pdf) {
             this._pdf.destroy();
         }
+        this.clear();
     };
     /**
      * @return {?}

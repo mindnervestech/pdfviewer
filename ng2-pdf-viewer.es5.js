@@ -378,9 +378,7 @@ var PdfViewerComponent = /** @class */ (function () {
      * @return {?}
      */
     PdfViewerComponent.prototype.ngOnDestroy = function () {
-        if (this._pdf) {
-            this._pdf.destroy();
-        }
+        this.clear();
     };
     /**
      * @return {?}
@@ -465,6 +463,25 @@ var PdfViewerComponent = /** @class */ (function () {
                 this.getCurrentViewer().scrollPageIntoView({ pageNumber: this._page });
             }
             this.update();
+        }
+    };
+    PdfViewerComponent.prototype.clear = function () {
+        console.log('clear...',this.loadingTask);
+        if (this.loadingTask && !this.loadingTask.destroyed) {
+            console.log('destroy');
+            this.loadingTask.destroy();
+        }
+        console.log('this._pdf',this._pdf);
+        if (this._pdf) {
+            console.log('destroy _pdf');
+            this._pdf.destroy();
+            this._pdf = null;
+            this.pdfMultiPageViewer.setDocument(null);
+            this.pdfSinglePageViewer.setDocument(null);
+            this.pdfMultiPageLinkService.setDocument(null, null);
+            this.pdfSinglePageLinkService.setDocument(null, null);
+            this.pdfMultiPageFindController.setDocument(null);
+            this.pdfSinglePageFindController.setDocument(null);
         }
     };
     /**
